@@ -122,6 +122,7 @@ public class LoginWindow {
                 }
                 else {
                     //FailedLogin.setVisible(true);
+                    JOptionPane.showMessageDialog(null,"ID and password does not match");
                     System.out.println(ID);
                     System.out.println(Pass);
                     System.out.println("Invalid Credentials");
