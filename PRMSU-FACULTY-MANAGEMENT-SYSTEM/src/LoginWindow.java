@@ -57,16 +57,15 @@ public class LoginWindow {
     LBGimage = new JLabel();
             Image bg;
             try {
-                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Image/loginimage.png"));
+                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/loginimage.png"));
                  ImageIcon imageIcon = new ImageIcon(bg);
                 LBGimage.setIcon(imageIcon);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-    
-    BgPanel.add(LBGimage);
-    BgPanel.setBounds(30,0,200, 200);
+    BgPanel.setBounds(0,75,1080, 645);
+    //BgPanel.setBackground(Color.gray);
     BgPanel.setLayout(null);
     
     
@@ -288,6 +287,7 @@ public class LoginWindow {
     PTextHolder.add(UnivLogo);
     PTextHolder.add(LoginButton);
     PTextHolder.add(Login);
+
     BgPanel.add(LBGimage);
     
     PTextM.add(TitleMission);
@@ -328,6 +328,7 @@ public class LoginWindow {
     LoginWindow.getContentPane().add(PTextQP);
     LoginWindow.getContentPane().add(PButtonHolder);
     LoginWindow.getContentPane().add(OffButton);
+    LoginWindow.getContentPane().add(BgPanel);
 
     //Window Essential
     LoginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
