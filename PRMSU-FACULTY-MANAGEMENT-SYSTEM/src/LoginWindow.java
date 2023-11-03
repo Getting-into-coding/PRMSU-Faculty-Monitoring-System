@@ -51,6 +51,7 @@ public class LoginWindow {
    LoginWindow(){  
     LoginWindow = new JFrame("Faculty Monitoring System");
 
+    //ito dan
     BgPanel = new JPanel();
 
     LBGimage = new JLabel();
