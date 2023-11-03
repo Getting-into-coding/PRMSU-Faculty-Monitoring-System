@@ -36,9 +36,10 @@ import javax.swing.table.DefaultTableModel;
 public class LoginWindow {
 
     JFrame LoginWindow;
-    JPanel PTextHolder, PButtonHolder,ImgHolder;
+    JPanel PTextHolder, PButtonHolder,BgPanel;
     JPanel PTextM,PTextV,PTextQP;
 
+    JLabel LBGimage;
     JLabel UnivText, UnivLogo, TitleMission, TitleVision, TitleQP, TitleQP2;
     JLabel mtext1, mtext2, mtext3, mtext4, mtext5, mtext6, mtext7, mtext8, mtext9;
     JLabel vtext1, vtext2, vtext3, vtext4;
@@ -49,6 +50,24 @@ public class LoginWindow {
     
    LoginWindow(){  
     LoginWindow = new JFrame("Faculty Monitoring System");
+
+    BgPanel = new JPanel();
+
+    LBGimage = new JLabel();
+            Image bg;
+            try {
+                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Image/loginimage.png"));
+                 ImageIcon imageIcon = new ImageIcon(bg);
+                LBGimage.setIcon(imageIcon);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+    
+    BgPanel.add(LBGimage);
+    BgPanel.setBounds(30,0,200, 200);
+    BgPanel.setLayout(null);
+    
     
     //Variable Constants
     int textboxheight = 20;
@@ -268,6 +287,7 @@ public class LoginWindow {
     PTextHolder.add(UnivLogo);
     PTextHolder.add(LoginButton);
     PTextHolder.add(Login);
+    BgPanel.add(LBGimage);
     
     PTextM.add(TitleMission);
     PTextM.add(mtext1);
