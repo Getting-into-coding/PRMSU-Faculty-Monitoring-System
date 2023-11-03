@@ -63,6 +63,7 @@ public class LoginWindow {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+    LBGimage.setBounds(0, 0, 1080, 645);
     BgPanel.setBounds(0,75,1080, 645);
     //BgPanel.setBackground(Color.gray);
     BgPanel.setLayout(null);
