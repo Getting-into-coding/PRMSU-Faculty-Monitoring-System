@@ -2,8 +2,6 @@ package UploadDocTreeNodes;
 
 import org.jdesktop.swingx.treetable.AbstractMutableTreeTableNode;
 
-import UploadDocTreeNodes.TreeTable.SubHeader;
-
 public class Node extends AbstractMutableTreeTableNode {
 
 	public Node(Object[] data) {

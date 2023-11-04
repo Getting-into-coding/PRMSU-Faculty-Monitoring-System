@@ -3,6 +3,10 @@
         "lib/**/*.jar",
         "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/jtreetable-4.0.0.jar",
         "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/swingx-all-1.6.5-1.jar",
-        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/swingx-all-1.6.4.jar"
+        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/swingx-all-1.6.4.jar",
+        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/jna-jpms-5.12.1.jar",
+        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/jna-platform-jpms-5.12.1.jar",
+        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/vlcj-4.8.2.jar",
+        "PRMSU-FACULTY-MANAGEMENT-SYSTEM/lib/vlcj-natives-4.8.1.jar"
     ]
 }

@@ -42,6 +42,7 @@ public class UploadDocWindow {
         TopPanel.setLayout(null);
         TopPanel.setBackground(Color.blue);
 
+        //This Section of the code is where the ComboBoxes are Located
         String[] FacultyName = {"Daniel Mercurio", "Danilo Llaga", "Ralph Farinas"};
         String[] SchoolYear = {"2023-2024", "2024-2025", "2025-2026"};
         String[] Semester = {"1st Semester", "2nd Semester", "Mid Year"};
@@ -72,6 +73,7 @@ public class UploadDocWindow {
                 CSemester.addItem(Sem);
             }
         CSemester.setBounds((topcompwidth*4)+30,yaxis, topcompwidth, 25);
+        //End of Combobox Section
 
 		List<String[]> content = new ArrayList<>();
 
