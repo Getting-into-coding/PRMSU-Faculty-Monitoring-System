@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -6,11 +7,13 @@ import java.util.List;
 import UploadDocTreeNodes.*;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class UploadDocWindow {
 
     JPanel TreeTablePanel, PreviewPanel, TopPanel;
-    JLabel Department;
+    JLabel Department, DocPreviewText, AddFileText, DeleteFileText;
+    JButton AddFileButton, DeleteFileButton;
     JComboBox CFacultyName, CSchoolYear, CSemester;
     
     UploadDocWindow(){
@@ -22,13 +25,19 @@ public class UploadDocWindow {
         TopPanel = new JPanel();
 
         Department = new JLabel();
+        AddFileText = new JLabel();
+        DeleteFileText = new JLabel();
+        DocPreviewText = new JLabel("document preview",null,SwingConstants.CENTER);
+
+        AddFileButton = new JButton();
+        DeleteFileButton = new JButton();
 
         CFacultyName = new JComboBox<>();
         CSchoolYear = new JComboBox<>();
         CSemester = new JComboBox<>();
 
         TreeTablePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        TreeTablePanel.setBounds(5,100,580, 575);
+        TreeTablePanel.setBounds(5,100,540, 575);
         TreeTablePanel.setLayout(new BorderLayout());
         //TreeTablePanel.setBackground();
 
@@ -40,7 +49,53 @@ public class UploadDocWindow {
         //TopPanel.setBorder(BorderFactory.createLineBorder(Color.gold));
         TopPanel.setBounds(0,0,1080, 75);
         TopPanel.setLayout(null);
-        TopPanel.setBackground(Color.blue);
+        TopPanel.setBackground(new Color(0, 120, 215));
+
+        
+        DocPreviewText.setBounds(25, 25, 250,15);
+        DocPreviewText.setFont(new Font("Arial", Font.BOLD, 15));
+
+        AddFileButton = new JButton();
+        Image AddFileIcon;
+                try {
+                    AddFileIcon = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/AddSection25x.png"));
+                    ImageIcon imageIcon = new ImageIcon(AddFileIcon);
+                    AddFileButton.setIcon(imageIcon);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        AddFileButton.setBounds(560,310,25,25);
+        AddFileButton.setFocusable(false);
+        AddFileButton.setContentAreaFilled(false);
+        AddFileButton.setBorderPainted(false);
+        AddFileButton.setBorder(null);
+
+        AddFileText.setText("Add File");
+        AddFileText.setBounds(552, 340, 250,10);
+        AddFileText.setForeground(new Color(75,174,79));
+        AddFileText.setFont(new Font("Arial", Font.BOLD, 10));
+
+        DeleteFileButton = new JButton();
+        Image DeleteFileIcon;
+                try {
+                    DeleteFileIcon = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/Delete25x.png"));
+                    ImageIcon imageIcon = new ImageIcon(DeleteFileIcon);
+                    DeleteFileButton.setIcon(imageIcon);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        DeleteFileButton.setBounds(560,380,25,25);
+        DeleteFileButton.setFocusable(false);
+        DeleteFileButton.setContentAreaFilled(false);
+        DeleteFileButton.setBorderPainted(false);
+        DeleteFileButton.setBorder(null);
+
+        DeleteFileText.setText("Delete File");
+        DeleteFileText.setBounds(547, 410, 250,10);
+        DeleteFileText.setForeground(new Color(255,68,68));
+        DeleteFileText.setFont(new Font("Arial", Font.BOLD, 10));
 
         //This Section of the code is where the ComboBoxes are Located
         String[] FacultyName = {"Daniel Mercurio", "Danilo Llaga", "Ralph Farinas"};
@@ -53,7 +108,7 @@ public class UploadDocWindow {
             for (String Name : FacultyName) {
                 CFacultyName.addItem(Name);
             }
-        CFacultyName.setBounds(5,yaxis, topcompwidth, 25);
+        CFacultyName.setBounds(25,yaxis, topcompwidth, 25);
 
             for (String Year : SchoolYear) {
                 CSchoolYear.addItem(Year);
@@ -65,14 +120,14 @@ public class UploadDocWindow {
         Department.setOpaque(true);
         Department.setLayout(null);
         Department.setHorizontalAlignment(SwingConstants.CENTER);
-        Department.setBounds(topcompwidth+30,yaxis,topcompwidth+145, 25);
+        Department.setBounds(topcompwidth+50,yaxis,topcompwidth+145, 25);
 
-        CSchoolYear.setBounds((topcompwidth*3),yaxis, topcompwidth, 25);
+        CSchoolYear.setBounds((topcompwidth*3+20),yaxis, topcompwidth, 25);
 
             for (String Sem : Semester) {
                 CSemester.addItem(Sem);
             }
-        CSemester.setBounds((topcompwidth*4)+30,yaxis, topcompwidth, 25);
+        CSemester.setBounds((topcompwidth*4+10)+30,yaxis, topcompwidth, 25);
         //End of Combobox Section
 
 		List<String[]> content = new ArrayList<>();
@@ -144,10 +199,25 @@ public class UploadDocWindow {
         TopPanel.add(CSchoolYear);
         TopPanel.add(CSemester);
         
+        PreviewPanel.add(DocPreviewText);
+
+        UploadDocFrame.add(AddFileButton);
+        UploadDocFrame.add(AddFileText);
+        UploadDocFrame.add(DeleteFileButton);
+        UploadDocFrame.add(DeleteFileText);
 
         UploadDocFrame.add(TreeTablePanel);
         UploadDocFrame.add(PreviewPanel);
         UploadDocFrame.add(TopPanel);
+
+        Image logo;
+            try {
+                logo = ImageIO.read(UploadDocWindow.class.getResourceAsStream("/Images/UploadDocLogo16x.png"));
+                UploadDocFrame.setIconImage(logo);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
         //Window Essential
         UploadDocFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -6,6 +6,9 @@ import java.awt.Component;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
@@ -62,6 +65,11 @@ public class TreeTable {
 
 		table.setShowGrid(true, false);
 		table.setColumnControlVisible(true);
+
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
 		table.packAll();
 
