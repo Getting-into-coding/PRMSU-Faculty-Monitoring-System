@@ -35,8 +35,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
-
 public class HomeWindow {
         JFrame HomeWindow;
         JPanel RootPanel, NaviPanel, HomePanel, DashPanel, ReportPanel;
@@ -44,8 +42,6 @@ public class HomeWindow {
         JLabel UnivLogo;
         JPanel VideoPanel;
         Canvas canvas;
-
-        EmbeddedMediaPlayerComponent mediaPlayerComponent;
     
         HomeWindow(){
 
@@ -247,11 +243,6 @@ public class HomeWindow {
             VideoPanel.add(canvas);
             VideoPanel.setPreferredSize(new Dimension(900, 720));
 
-            
-
-            mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-            VideoPanel.add(mediaPlayerComponent);
-
 
             //Adding of Components to the window
             RootPanel.add(NaviPanel);
@@ -274,11 +265,6 @@ public class HomeWindow {
 
             VideoPanel.setBounds(180, 0, VideoPanel.getPreferredSize().width, VideoPanel.getPreferredSize().height);
 
-            mediaPlayerComponent.mediaPlayer().video().setAspectRatio("1:1");
-            mediaPlayerComponent.mediaPlayer().video().setScale(1.0f);
-            mediaPlayerComponent.mediaPlayer().media().play("src/Videos/BGHomePanelVideo.mp4");
-            mediaPlayerComponent.mediaPlayer().controls().setRepeat(true);
-
             //Responsible for making the window open on the center of the screen on start up
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             int w = HomeWindow.getSize().width;
@@ -286,7 +272,7 @@ public class HomeWindow {
             int x = (dim.width-w)/2;
             int y = (dim.height-h)/2;
             HomeWindow.setLocation(x,y);
-            
+                
         
         }
 
