@@ -1,12 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -33,15 +26,43 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 public class HomeWindow {
         JFrame HomeWindow;
         JPanel RootPanel, NaviPanel, HomePanel, DashPanel, ReportPanel;
         JButton HomeButton, ListFacButton, ReportButton, HelpButton, LogoutButton;
-        JLabel UnivLogo;
+        JLabel UnivLogo, HPimage;
         JPanel VideoPanel;
         Canvas canvas;
+
+        //For list of faculty
+        JPanel jt,sp;
+        DefaultTableModel model;
+        JTable table;
+        JScrollPane scrollPane;
+        JButton button;
+        JTextField Search;
+
+        //For Reporting
+        JPanel jt2;
+        DefaultTableModel model2;
+        JTable table2;
+        JScrollPane scrollPane2;
+        JLabel report;
+        JButton button2;
+        JTextField Search2;
+
     
         HomeWindow(){
 
@@ -68,6 +89,198 @@ public class HomeWindow {
 
             UnivLogo = new JLabel();
 
+            //Code of list of faculty
+
+            JPanel jt,sp;
+            DefaultTableModel model;
+            JTable table;
+            JScrollPane scrollPane;
+            JButton button;
+            JTextField Search;
+        
+        
+        // list of fac
+        String[] columnNames = {"Full Name","Department","A.Y.","Semester","Edit"};
+
+        // Data
+        Object[][] data = {
+            {"Faculty 1", "Computer Engineering", "2023-2024", "1st Semester", "Add, Edit, Delete"}
+        };
+        
+        //table model
+        model = new DefaultTableModel(data, columnNames);
+        
+        class CenterRenderer extends DefaultTableCellRenderer {
+             public CenterRenderer() {
+        setHorizontalAlignment(JLabel.CENTER);
+             }
+            };
+        
+        // table with the model
+        table = new JTable(model){
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                if (column == 4) {
+                    return new MultiButtonRenderer();
+                }
+                return super.getCellRenderer(row, column);
+            }
+        };
+        
+        
+        table.setBounds(10, 10, 100, 100);
+        table.getTableHeader().setBounds(0,0, 50,30);
+        table.getTableHeader().setFont(new Font("ARIAL",Font.BOLD,16));
+        table.getTableHeader().setBackground(new Color(57, 167, 255));
+        table.setGridColor(Color.BLACK);
+        table.setShowGrid(true);
+        table.setRowHeight(60);
+        table.setFont(new Font("ARIAL", Font.PLAIN, 10));
+        
+        //scroll pane
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 10, 1145, 400);
+        
+        //Rendere of each input in table
+        CenterRenderer centerRenderer = new CenterRenderer();
+        for (int i = 0; i < table.getColumnCount(); i++) {
+         table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+       
+        //table panel
+        jt = new JPanel();
+        jt.setBounds(10,70,1165,500);
+        jt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        jt.setLayout(null); 
+        jt.add(scrollPane);
+        
+        //search
+        Search = new JTextField("Search");
+        Search.setBounds(1020,30,150,30);
+        
+         // button
+         button = new JButton("Add Row");
+         button.setBounds(10, 30, 100, 30);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.addRow(new Object[]{" ", " ", " ", " ", "Add, Edit,Delete"});
+            }
+        });
+
+        //button and search panel
+        sp = new JPanel();
+        sp.setBounds(10,10,500,100);
+        sp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        sp.setLayout(null);
+        sp.add(Search);
+        sp.add(button);
+
+        DashPanel.add(jt);
+        DashPanel.add(sp);
+
+
+    class MultiButtonRenderer extends JPanel implements TableCellRenderer {
+
+        public MultiButtonRenderer() {
+            setOpaque(true);
+            setLayout(new FlowLayout(FlowLayout.CENTER));
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            removeAll(); // Remove all existing components
+            if (value != null) {
+                String[] labels = value.toString().split(","); // Split the cell value into button labels
+                for (String label : labels) {
+                    JButton button = new JButton(label.trim());
+                    
+                    button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Add your custom button behavior here
+                        System.out.println("Button " + label + " clicked");
+                    }
+                });
+                    
+                    add(button);
+                    // Add an action listener to the button here, if needed
+                }
+            }
+            return this;
+        }
+    }
+
+    
+        //For reporting
+
+        String[] columnNames2 = {"Name","Department","File","Semester","Status"};
+
+        // Data
+        Object[][] data2 = {
+            {"Froilan Cantillo", "Computer Engineering", "COR", "1st Semester", "Not Uploaded"},
+            {"Michael Romualdo", "Mechanical Engineering", "Quiz 1", "1st Semester", "Not Uploaded"},
+            {"Eloisa Romulo", "Civil Engineering", "Test", "1st Semester", "Not Uploaded"},
+            {"Grecelia Dullas", "Electrical Engineering", "Activity 2", "1st Semester", "Not Uploaded"},
+        };
+        
+        //table model
+        model2 = new DefaultTableModel(data2, columnNames2);
+        
+        class CenterRenderer2 extends DefaultTableCellRenderer {
+             public CenterRenderer2() {
+        setHorizontalAlignment(JLabel.CENTER);
+        }
+    }
+         
+        //table with the model
+        table2 = new JTable(model2);
+        table2.setBounds(10, 10, 100, 100);
+        table2.getTableHeader().setBounds(0,0, 50,30);
+        table2.getTableHeader().setFont(new Font("ARIAL",Font.BOLD,16));
+        table2.getTableHeader().setBackground(new Color(57, 167, 255));
+        table2.setGridColor(Color.BLACK);
+        table2.setShowGrid(true);
+        table2.setRowHeight(60);
+        table2.setFont(new Font("ARIAL", Font.PLAIN, 10));
+        
+        //scroll pane
+        scrollPane2 = new JScrollPane(table2);
+        scrollPane2.setBounds(10, 50, 1445, 400);
+        
+        //Rendere of each input in table
+        CenterRenderer centerRenderer2 = new CenterRenderer();
+        for (int i = 0; i < table2.getColumnCount(); i++) {
+         table2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        
+        //report
+        report = new JLabel("REPORT");
+        report.setBounds(30, 10, 200, 30);
+        report.setFont(new Font("ARIAL", Font.BOLD, 30));
+        
+        //button
+        button2 = new JButton("Export");
+        button2.setBounds(1320, 460, 100, 30);
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        
+        //table panel
+        jt2 = new JPanel();
+        jt2.setBounds(10,70,1465,800);
+        jt2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        jt2.setLayout(null);
+        jt2.add(scrollPane2);
+        jt2.add(report);
+        jt2.add(button2);
+
+        ReportPanel.add(jt2);
+
+
+
             //Root Panel is the master of all sub panels
             RootPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             //RootPanel.setBackground(bgColor);
@@ -78,7 +291,7 @@ public class HomeWindow {
             //The Navigation Panel is the Panel for the buttons such as "Home", "List", "Report", etc.
             NaviPanel.setBorder(BorderFactory.createLineBorder(TextHighlightColor));
             NaviPanel.setBounds(0,0,180, 720);
-            NaviPanel.setBackground(backgroundColor);
+            NaviPanel.setBackground(SystemColor.textHighlight);
             NaviPanel.setLayout(null);
 
             VideoPanel = new JPanel(new BorderLayout());
@@ -88,7 +301,6 @@ public class HomeWindow {
             //The Color BG is a placeholder
             HomePanel.setBorder(BorderFactory.createLineBorder(TextHighlightColor));
             HomePanel.setBounds(180,0,900, 720);
-            HomePanel.setBackground(Color.red);  //Remove this pag gagawin nyo na code nyo
             HomePanel.setLayout(null);
             DashPanel.setVisible(true);
 
@@ -98,7 +310,6 @@ public class HomeWindow {
             //The Color BG is a placeholder
             DashPanel.setBorder(BorderFactory.createLineBorder(TextHighlightColor));
             DashPanel.setBounds(180,0,900, 720);
-            DashPanel.setBackground(Color.green);   //Remove this pag gagawin nyo na code nyo
             DashPanel.setLayout(null);
             DashPanel.setVisible(false);
 
@@ -106,12 +317,11 @@ public class HomeWindow {
             //The Color BG is a placeholder
             ReportPanel.setBorder(BorderFactory.createLineBorder(TextHighlightColor));
             ReportPanel.setBounds(180,0,900 , 720);
-            ReportPanel.setBackground(Color.yellow);    //Remove this pag gagawin nyo na code nyo
             ReportPanel.setLayout(null);
             ReportPanel.setVisible(false);
 
 
-                                        //GUIs of NaviPanel//
+            //GUIs of NaviPanel
             //Code for Logo
             UnivLogo = new JLabel();
             Image image;
@@ -242,7 +452,6 @@ public class HomeWindow {
             //VLC video player
             VideoPanel.add(canvas);
             VideoPanel.setPreferredSize(new Dimension(900, 720));
-
 
             //Adding of Components to the window
             RootPanel.add(NaviPanel);
