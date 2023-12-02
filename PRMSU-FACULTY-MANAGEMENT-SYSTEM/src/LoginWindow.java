@@ -52,7 +52,7 @@ public class LoginWindow {
    LoginWindow(){  
     LoginWindow = new JFrame("Faculty Monitoring System");
 
-    //Back panel and Background design
+    //Background design
     BgPanel = new JPanel();
     
     LBGimage = new JLabel();
@@ -73,8 +73,6 @@ public class LoginWindow {
     
     //Variable Constants
     int textboxheight = 20;
-    Color backgroundColor = new Color(0,0,122);
-    Color TextHighlightColor = new Color(236,189,68);
     Color textpanel = new Color(0,0,0);
     Color BGpanel = new Color(255,255,255,150);
     Color HeadText = new Color(251,201,1);
