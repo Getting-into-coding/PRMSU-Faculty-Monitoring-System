@@ -16,6 +16,9 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Color;
 import javax.swing.JSeparator;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 public class addSection extends JDialog 
 {
 	

@@ -23,6 +23,9 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.JComboBox;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 public class editDialog extends JDialog {
 
 	JPanel contentPanel = new JPanel();
@@ -40,6 +43,7 @@ public class editDialog extends JDialog {
 	
 	public static void main(String[] args) 
 	{
+		FlatMacLightLaf.setup();
 		try 
 		{
 			editDialog dialog = new editDialog();

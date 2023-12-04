@@ -24,6 +24,9 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JSeparator;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 public class addPreparation extends JPanel 
 {
 	JTextField facultyName;

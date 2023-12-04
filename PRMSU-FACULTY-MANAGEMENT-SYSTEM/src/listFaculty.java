@@ -47,6 +47,8 @@ import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 public class listFaculty extends JPanel 
 {

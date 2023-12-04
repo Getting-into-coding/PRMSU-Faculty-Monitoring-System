@@ -11,6 +11,9 @@ import javax.swing.JSlider;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 public class sections extends JPanel 
 {
 	JLabel sectionLbl, semesterLbl, academicYearLbl;

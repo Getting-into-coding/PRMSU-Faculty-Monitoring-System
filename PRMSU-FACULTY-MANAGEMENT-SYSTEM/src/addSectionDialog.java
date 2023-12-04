@@ -15,6 +15,9 @@ import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 public class addSectionDialog extends JDialog 
 {
 
@@ -29,6 +32,7 @@ public class addSectionDialog extends JDialog
 
 	public static void main(String[] args) 
 	{
+		FlatMacLightLaf.setup();
 		try 
 		{
 			addSectionDialog dialog = new addSectionDialog();
