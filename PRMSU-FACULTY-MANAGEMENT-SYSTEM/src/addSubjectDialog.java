@@ -18,7 +18,6 @@ import javax.swing.JComboBox;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
-
 public class addSubjectDialog extends JDialog 
 {
 

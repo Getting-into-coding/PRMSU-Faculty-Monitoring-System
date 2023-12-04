@@ -127,7 +127,6 @@ public class HomeWindow
             faculty.setVisible(false);  // sets List of Faculty Panel not visible
     
         //For reporting
-
         String[] columnNames2 = {"Name","Department","File","Semester","Status"};
 
         // Data
@@ -179,7 +178,6 @@ public class HomeWindow
         //button
         button2 = new JButton("Export");
         button2.setBounds(750, 460, 100, 30);
-
         button2.addActionListener(exportToExcel);
         
         //table panel

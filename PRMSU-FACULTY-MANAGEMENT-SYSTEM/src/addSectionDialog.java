@@ -97,6 +97,7 @@ public class addSectionDialog extends JDialog
 		contentPanel.add(semesterLbl);
 		
 		academicYearLbl = new JLabel("Academic Year : ");
+
 		academicYearLbl.setFont(new Font("Arial", Font.BOLD, 12));
 		academicYearLbl.setBounds(15, 110, 102, 20);
 		contentPanel.add(academicYearLbl);
