@@ -97,8 +97,8 @@ public class LoginWindow {
     
 
     LoginButton = new JButton("Login");
-    LoginButton.setBackground(Color.GRAY);
-    LoginButton.setForeground(Color.WHITE);
+    //LoginButton.setBackground(Color.GRAY);
+    //LoginButton.setForeground(Color.WHITE);
     LoginButton.setBounds(938,24,100,30);
     LoginButton.setFocusable(false);
 
@@ -369,6 +369,7 @@ public class LoginWindow {
 }
 
     public static void main(String[] args) {
+        FlatMacLightLaf.setup();
         new LoginWindow();
     }
     
