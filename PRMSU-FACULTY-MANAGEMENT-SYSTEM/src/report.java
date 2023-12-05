@@ -77,13 +77,28 @@ public class report extends JPanel{
     };
     
      report(){
+		
 
         String[] columnNames2 = {"Name","Department","File","Semester","Academic Year","Status"};
 
         // Data
         Object[][] data2 = {
-            {"Oliver A. Sabado", "Computer Engineering", "Activity 1", "1st Semester", "2023-2024","Uploaded"},
-            {"", "", "", "", "",""}
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null},
+            {null,null,null,null,null,null}  
         };
         
         //table model
