@@ -65,6 +65,7 @@ public class LoginWindow {
     Color textpanel = new Color(0,0,0);
     Color BGpanel = new Color(255,255,255,150);
     Color HeadText = new Color(251,201,1);
+    Color complimentColor = new Color(0, 122, 122);
     
     //Instantiaions of Panels
     PTextHolder = new JPanel();
@@ -97,22 +98,22 @@ public class LoginWindow {
     
 
     LoginButton = new JButton("Login");
-    //LoginButton.setBackground(Color.GRAY);
-    //LoginButton.setForeground(Color.WHITE);
-    LoginButton.setBounds(938,24,100,30);
+    LoginButton.setBackground(complimentColor);
+    LoginButton.setForeground(Color.WHITE);
+    LoginButton.setBounds(935,24,100,30);
     LoginButton.setFocusable(false);
 
     OffButton = new JButton();
     Image image2;
             try {
-                image2 = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/OffButton.png"));
+                image2 = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/offbuttonblue.png"));
                  ImageIcon imageIcon = new ImageIcon(image2);
                 OffButton.setIcon(imageIcon);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-    OffButton.setBounds(1000,640,100,50);
+    OffButton.setBounds(980,640,100,50);
     OffButton.setFocusable(false);
     OffButton.setContentAreaFilled(false);
     OffButton.setBorderPainted(false);
