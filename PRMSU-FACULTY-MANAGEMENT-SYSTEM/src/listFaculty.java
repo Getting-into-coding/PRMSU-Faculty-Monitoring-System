@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +38,7 @@ public class listFaculty extends JPanel
 	List<Integer> facultyIndex = new ArrayList<>();
 	
 	public listFaculty() {
-		
+	
 		setBackground(SystemColor.text);
 		setFont(new Font("Arial", Font.BOLD, 15));
 		setBounds(180,0,1000, 720);
@@ -330,7 +331,7 @@ public class listFaculty extends JPanel
 	}
 	
 	// Method to load faculty data from the database and populate the UI
-	private void loadFacultyData() {
+	public void loadFacultyData() {
 		List<FacultyData> facultyDataList = DatabaseHandler.getFacultyDataList();
 		System.out.println(facultyDataList);
 		for (FacultyData facultyData : facultyDataList) {

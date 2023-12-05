@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,6 +32,7 @@ public class addPreparation extends JPanel
 	JFrame frame;
 	JComboBox<String> semesterCB, acadYearCB;
 	int currentRow = 0;
+	int currentFacultyID = -1;
 	
 	public addPreparation() 
 	{
@@ -57,7 +59,7 @@ public class addPreparation extends JPanel
 		Header.add(panelLbl);
 		
 		facultyName = new JTextField();
-		facultyName.setText("Danilo Llaga Jr.");
+		//facultyName.setText("Danilo Llaga Jr.");
 		facultyName.setBackground(SystemColor.text);
 		facultyName.setHorizontalAlignment(SwingConstants.CENTER);
 		facultyName.setEditable(false);
@@ -111,8 +113,7 @@ public class addPreparation extends JPanel
 		addSubjectBtn.setFocusable(false);
 		addSubjectBtn.addActionListener(new ActionListener() {
 			
-		public void actionPerformed(ActionEvent e) 
-		{
+		public void actionPerformed(ActionEvent e) {
 			subject sub = new subject();
 			addSubjectDialog add = new addSubjectDialog();
 			add.show();
@@ -342,22 +343,9 @@ public class addPreparation extends JPanel
 				});
 			}
 		});
+		
 		addSubjectBtn.setBounds(120, 20, 150, 35);
 		Footer.add(addSubjectBtn);
-		
-		JButton backBtn = new JButton("Back");
-		backBtn.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				frame.setVisible(false);
-			}
-		});
-		backBtn.setBackground(SystemColor.text);
-		//backBtn.setBorder(new LineBorder(SystemColor.textText, 1, true));
-		backBtn.setFont(new Font("Arial", Font.BOLD, 20));
-		backBtn.setBounds(775, 20, 125, 35);
-		Footer.add(backBtn);
 		
 		JPanel Panel = new JPanel();
 		Panel.setLayout(null);
@@ -410,6 +398,7 @@ public class addPreparation extends JPanel
 		String[] semester = {
 	            "First Semester", "Second Semester", "Midyear"
 	        };
+	
 		for (String sem : semester) {
 		semesterCB.addItem(sem);
 		semesterCB.setFont(new Font("Arial", Font.BOLD, 13));
@@ -424,7 +413,31 @@ public class addPreparation extends JPanel
 		{
 			acadYearCB.addItem(String.valueOf(year) + " - " + String.valueOf(year+1));
 		}
+
+		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				// Handle the selected academic year
+				currentFacultyID = DatabaseHandler.getFacultyID(facultyName.getText());
+                String selectedAcademicYear = (String) acadYearCB.getSelectedItem();
+				String selectedSemester = (String) semesterCB.getSelectedItem();
+                if (currentFacultyID != -1) {
+                    DatabaseHandler.updateAcademicYear(selectedAcademicYear, currentFacultyID);
+                    DatabaseHandler.updateSemester(selectedSemester, currentFacultyID);
+///////////////////////////////////////////////////////////////////////////////////////////
+// NEED TO IMPLEMENT A METHOD TO UPDATE listFaculty 'table' when choosing year level and sem in cboxes 
+//////////////////////////////////////////////////////////////////////////////////////////
+					frame.setVisible(false);
+				}		
+			}
+		});
 		
+		backBtn.setBackground(SystemColor.text);
+		//backBtn.setBorder(new LineBorder(SystemColor.textText, 1, true));
+		backBtn.setFont(new Font("Arial", Font.BOLD, 20));
+		backBtn.setBounds(775, 20, 125, 35);
+		Footer.add(backBtn);
 	
 		JDialog addDial0g = new JDialog();
 		addDial0g.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -173,8 +173,8 @@ public class DatabaseHandler {
 
         return academicYear;
     }
-    
-    
+
+    // Get semester name from the database based on semester ID
     public static String getYearName(int yearID) {
         String query = "SELECT academicYear FROM year WHERE yearID = ?";
         String yearName = "";
@@ -264,5 +264,88 @@ public class DatabaseHandler {
         }
     }
 
+    // Update semester in the database based on facultyID
+    public static boolean updateSemester(String semester, int facultyID) {
+        String query = "UPDATE faculty SET semesterID = (SELECT semesterID FROM semester WHERE semesterName = ?) WHERE facultyID = ?";
+        
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, semester);
+            preparedStatement.setInt(2, facultyID);
 
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return false;
+        }
+    }
+
+    // Update academic year in the database based on facultyID
+    public static boolean updateAcademicYear(String academicYear, int facultyID) {
+        String query = "UPDATE faculty SET yearID = (SELECT yearID FROM year WHERE academicYear = ?) WHERE facultyID = ?";
+        
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, academicYear);
+            preparedStatement.setInt(2, facultyID);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return false;
+        }
+    }
+
+    public static int getFacultyID(String facultyName) {
+        String query = "SELECT facultyID FROM faculty WHERE name = ?";
+        int facultyID = -1;
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, facultyName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                facultyID = resultSet.getInt("facultyID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return facultyID;
+    }
+
+    public static FacultyData getFacultyData(int facultyID) {
+        FacultyData facultyData = null;
+
+        String query = "SELECT name, deptID, yearID, semesterID FROM faculty WHERE facultyID = ?";
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, facultyID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String facultyName = resultSet.getString("name");
+                int departmentID = resultSet.getInt("deptID");
+                int yearID = resultSet.getInt("yearID");
+                int semesterID = resultSet.getInt("semesterID");
+
+                // Fetch department name, academic year, and semester name using existing methods
+                String departmentName = getDepartmentName(departmentID);
+                String academicYear = getAcademicYear(yearID);
+                String semesterName = getSemesterName(semesterID);
+
+                // Create FacultyData object with complete information
+                facultyData = new FacultyData(facultyID, facultyName, departmentName, academicYear, semesterName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return facultyData;
+    }
 }
