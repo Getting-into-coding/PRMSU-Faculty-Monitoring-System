@@ -550,6 +550,32 @@ public class DatabaseHandler {
         return subjects;
     }
 
+    public static int addSection(String sectionName) {
+        int sectionID = -1;
+    
+        try (Connection connection = connect();) {
+            String insertSectionQuery = "INSERT INTO section (section) VALUES (?)";
+    
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSectionQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(3, sectionName);
+    
+                int affectedRows = preparedStatement.executeUpdate();
+    
+                if (affectedRows > 0) {
+                    // Retrieve the auto-generated sectionID
+                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            sectionID = generatedKeys.getInt(1);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+    
+        return sectionID;
+    }
         // Helper methods for closing resources
         private static void closeConnection(Connection connection) {
             if (connection != null) {

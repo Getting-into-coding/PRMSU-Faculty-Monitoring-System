@@ -422,6 +422,9 @@ int currentFacultyID = -1;
 									String section = addSectionDialog.sectionTF.getText();
 									String semester = (String) addSectionDialog.semesterCB.getSelectedItem();
 									String academicYear = (String) addSectionDialog.acadYearCB.getSelectedItem();
+
+									// Add section to the database
+									DatabaseHandler.addSection(section);
 									
 									sec.deleteBtn.addMouseListener(new MouseAdapter() 
 									{
