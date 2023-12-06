@@ -572,35 +572,63 @@ public class DatabaseHandler {
             return -1; // Or some error code to indicate failure
         }
     }
-        // Helper methods for closing resources
-        private static void closeConnection(Connection connection) {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     
-        private static void closeStatement(Statement statement) {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+    public static List<String> getSections(int facultyID, int subjectID) {
+        List<String> sectionsList = new ArrayList<>();
+
+        try {
+            Connection connection = connect();
+            String query = "SELECT section FROM faculty_subject_section " +
+                           "WHERE facultyID = ? AND subjectID = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, facultyID);
+                preparedStatement.setInt(2, subjectID);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    String sectionName = resultSet.getString("section");
+                    sectionsList.add(sectionName);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception or log it
         }
+
+        return sectionsList;
+    }
     
-        private static void closeResultSet(ResultSet resultSet) {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+    // Helper methods for closing resources
+    private static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    private static void closeStatement(Statement statement) {
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void closeResultSet(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
