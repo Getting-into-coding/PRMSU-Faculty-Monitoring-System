@@ -478,23 +478,24 @@ public class addPreparation extends JPanel
 		
 	}
 	
-	public void fetchAndDisplaySubjects() {
-	// Fetch subjects from the database using DatabaseHandler method
-	List<SubjectData> subjects = DatabaseHandler.getAllSubjects(); 
+    public void fetchAndDisplaySubjects() {
+        // Fetch subjects associated with the current faculty from the database
+        int facultyID = DatabaseHandler.getFacultyID(facultyName.getText());
+        List<SubjectData> subjects = DatabaseHandler.getSubjectsByFaculty(facultyID);
 
-	// Iterate through the subjects and add them to the Body panel
-	for (SubjectData subjectData : subjects) {
-		subject sub = new subject();
-		sub.subjectLbl.setText(subjectData.getSubjectName());
-		sub.semesterLbl.setText((String) semesterCB.getSelectedItem());
-		sub.academicYearLbl.setText((String) acadYearCB.getSelectedItem());
+        // Iterate through the subjects and add them to the Body panel
+        for (SubjectData subjectData : subjects) {
+            subject sub = new subject();
+            sub.subjectLbl.setText(subjectData.getSubjectName());
+            sub.semesterLbl.setText((String) semesterCB.getSelectedItem());
+            sub.academicYearLbl.setText((String) acadYearCB.getSelectedItem());
 
-		Body.add(sub);
-	}
+            Body.add(sub);
+        }
 
-	// Revalidate and repaint the Body panel
-	Body.revalidate();
-	Body.repaint();
-	}
+        // Revalidate and repaint the Body panel
+        Body.revalidate();
+        Body.repaint();
+    }
 }
 

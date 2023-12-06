@@ -517,6 +517,39 @@ public class DatabaseHandler {
         }
     }
 
+    public static List<SubjectData> getSubjectsByFaculty(int facultyID) {
+        List<SubjectData> subjects = new ArrayList<>();
+        Connection connection = null;
+
+        try {
+            connection = connect();
+            // Assuming you have a table named "FacultySubjects" that associates faculty and subjects
+            String query = "SELECT subjects.* FROM faculty_subject " +
+                           "JOIN subjects ON faculty_subject.subjectID = subjects.subjectID " +
+                           "WHERE faculty_subject.facultyID = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, facultyID);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int subjectID = resultSet.getInt("subjectID");
+                        String subjectName = resultSet.getString("subject");
+                        String syllabus = resultSet.getString("syllabus");
+
+                        // You may need to adjust the SubjectData constructor based on your SubjectData class
+                        SubjectData subjectData = new SubjectData(subjectID, subjectName, syllabus);
+                        subjects.add(subjectData);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle the exception based on your application's requirements
+        }
+
+        return subjects;
+    }
+
         // Helper methods for closing resources
         private static void closeConnection(Connection connection) {
             if (connection != null) {
