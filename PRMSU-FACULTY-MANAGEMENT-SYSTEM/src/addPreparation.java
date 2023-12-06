@@ -36,7 +36,7 @@ public class addPreparation extends JPanel
 	
 	public addPreparation() 
 	{
-		new listFaculty();
+		//new listFaculty();
 		
 		setBackground(SystemColor.text);
 		setFont(new Font("Arial", Font.BOLD, 15));
@@ -111,42 +111,63 @@ public class addPreparation extends JPanel
 		//addSubjectBtn.setBorder(new LineBorder(SystemColor.textText, 1, true));
 		addSubjectBtn.setFont(new Font("Arial", Font.BOLD, 20));
 		addSubjectBtn.setFocusable(false);
+
 		addSubjectBtn.addActionListener(new ActionListener() {
-			
 		public void actionPerformed(ActionEvent e) {
+
 			subject sub = new subject();
+
 			addSubjectDialog add = new addSubjectDialog();
+
 			add.show();
-			
-			add.addBtn.addActionListener(new ActionListener() 
-			{
-				public void actionPerformed(ActionEvent e) 
-				{
+		
+			add.addBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
 					String code = add.codeTF.getText();
 					String description = add.decriptionTF.getText();
-					
-					if(code.isEmpty() || description.isEmpty() || add.semesterCB.getSelectedIndex()==0) 
-					{
-						JOptionPane.showMessageDialog(Body, "invalid Input!", "Error", JOptionPane.INFORMATION_MESSAGE);
-					}
-					else 
-					{
-						sub.subjectLbl.setText(code + " - " + description);
-						sub.semesterLbl.setText((String) add.semesterCB.getSelectedItem());
-						sub.academicYearLbl.setText((String) add.acadYearCB.getSelectedItem());
-						Body.add(sub);
-						currentRow++;
-						
-						if (Body.getComponentCount() > 10) 
-						{ 
-							// Increase the preferred height of the rowPanel
-							Dimension preferredSize = Body.getPreferredSize();
-							preferredSize.height += 50;
-							Body.setLayout(new GridLayout(Body.getComponentCount(), 1));
-							Body.setPreferredSize(preferredSize);
+					String subjectDisplay = code + " " + description;
+			
+					if (code.isEmpty() || description.isEmpty() || add.semesterCB.getSelectedIndex() == 0) {
+						JOptionPane.showMessageDialog(Body, "Invalid Input!", "Error", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						// Check if the subject already exists
+						int existingSubjectID = DatabaseHandler.getSubjectID(subjectDisplay);
+			
+						if (existingSubjectID != -1) {
+							// Subject already exists, use the existing ID
+							int facultyID = DatabaseHandler.getFacultyID(facultyName.getText());
+							DatabaseHandler.associateFacultyWithSubject(facultyID, existingSubjectID);
+							JOptionPane.showMessageDialog(Body, "Subject Already exists", "Error", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							// Subject doesn't exist, insert it into the database
+							int subjectID = DatabaseHandler.insertSubject(subjectDisplay);
+			
+							// Fetch the latest subject data from the database
+							SubjectData latestSubject = DatabaseHandler.getLatestSubject();
+			
+							// Update UI components with the new data
+							sub.subjectLbl.setText(latestSubject.getSubjectName());
+							sub.semesterLbl.setText((String) add.semesterCB.getSelectedItem());
+							sub.academicYearLbl.setText((String) add.acadYearCB.getSelectedItem());
+			
+							// Add the subject to the panel
+							Body.add(sub);
+							currentRow++;
+			
+							if (Body.getComponentCount() > 10) {
+								// Increase the preferred height of the rowPanel
+								Dimension preferredSize = Body.getPreferredSize();
+								preferredSize.height += 50;
+								Body.setLayout(new GridLayout(Body.getComponentCount(), 1));
+								Body.setPreferredSize(preferredSize);
+								Body.revalidate();
+							}
+			
+							int facultyID = DatabaseHandler.getFacultyID(facultyName.getText());
+							DatabaseHandler.associateFacultyWithSubject(facultyID, subjectID);
+			
 							Body.revalidate();
 						}
-						Body.revalidate();
 						add.dispose();
 					}
 				}
@@ -344,6 +365,7 @@ public class addPreparation extends JPanel
 			}
 		});
 		
+		
 		addSubjectBtn.setBounds(120, 20, 150, 35);
 		Footer.add(addSubjectBtn);
 		
@@ -425,9 +447,9 @@ public class addPreparation extends JPanel
                 if (currentFacultyID != -1) {
                     DatabaseHandler.updateAcademicYear(selectedAcademicYear, currentFacultyID);
                     DatabaseHandler.updateSemester(selectedSemester, currentFacultyID);
-///////////////////////////////////////////////////////////////////////////////////////////
-// NEED TO IMPLEMENT A METHOD TO UPDATE listFaculty 'table' when choosing year level and sem in cboxes 
-//////////////////////////////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////////////////////////////////
+	// NEED TO IMPLEMENT A METHOD TO UPDATE listFaculty 'table' when choosing year level and sem in cboxes //
+			//////////////////////////////////////////////////////////////////////////////////////////
 					frame.setVisible(false);
 				}		
 			}
@@ -454,6 +476,25 @@ public class addPreparation extends JPanel
         int y = (dim.height-h)/2;
         frame.setLocation(x,y);
 		
+	}
+	
+	public void fetchAndDisplaySubjects() {
+	// Fetch subjects from the database using DatabaseHandler method
+	List<SubjectData> subjects = DatabaseHandler.getAllSubjects(); 
+
+	// Iterate through the subjects and add them to the Body panel
+	for (SubjectData subjectData : subjects) {
+		subject sub = new subject();
+		sub.subjectLbl.setText(subjectData.getSubjectName());
+		sub.semesterLbl.setText((String) semesterCB.getSelectedItem());
+		sub.academicYearLbl.setText((String) acadYearCB.getSelectedItem());
+
+		Body.add(sub);
+	}
+
+	// Revalidate and repaint the Body panel
+	Body.revalidate();
+	Body.repaint();
 	}
 }
 
