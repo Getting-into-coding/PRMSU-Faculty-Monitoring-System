@@ -327,6 +327,9 @@ int currentFacultyID = -1;
 									String section = addSectionDialog.sectionTF.getText();
 									String semester = (String) addSectionDialog.semesterCB.getSelectedItem();
 									String academicYear = (String) addSectionDialog.acadYearCB.getSelectedItem();
+
+									// Add section to the database
+									int sectionID = DatabaseHandler.addSection(section);
 									
 									if(section.isEmpty() || addSectionDialog.semesterCB.getSelectedIndex() == 0) 
 									{
@@ -413,23 +416,26 @@ int currentFacultyID = -1;
 						{
 							addSectionDialog addSectionDialog = new addSectionDialog();
 							addSectionDialog.show();
+							System.out.println("BPRESSED");
 							
 							addSectionDialog.addDialogBtn.addActionListener(new ActionListener() 
 							{
 								public void actionPerformed(ActionEvent e) 
 								{
 									sections sec = new sections();
+									System.out.println("BPRESSEDs");
 									String section = addSectionDialog.sectionTF.getText();
 									String semester = (String) addSectionDialog.semesterCB.getSelectedItem();
 									String academicYear = (String) addSectionDialog.acadYearCB.getSelectedItem();
 
 									// Add section to the database
-									DatabaseHandler.addSection(section);
+									int sectionID = DatabaseHandler.addSection(section);
 									
 									sec.deleteBtn.addMouseListener(new MouseAdapter() 
 									{
 										public void mousePressed(MouseEvent e) 
 										{
+											System.out.println("BPRESSED3e");
 											edit.sectionPanel.remove(sec);
 											edit.revalidate();
 										}

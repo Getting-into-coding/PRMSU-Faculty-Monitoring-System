@@ -330,7 +330,6 @@ public class listFaculty extends JPanel
 		addPanel.setBounds(0, 0, 300, 150);
 		addPanel.setLayout(null);
 
-		
 	}
 	
 	// Method to load faculty data from the database and populate the UI

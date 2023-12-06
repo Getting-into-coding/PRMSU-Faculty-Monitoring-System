@@ -550,31 +550,27 @@ public class DatabaseHandler {
         return subjects;
     }
 
-    public static int addSection(String sectionName) {
-        int sectionID = -1;
+    public static int addSection(String section) {
+        try {
+            Connection connection = connect();
+            String query = "INSERT INTO section (section) VALUES (?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, section);
+                preparedStatement.executeUpdate();
     
-        try (Connection connection = connect();) {
-            String insertSectionQuery = "INSERT INTO section (section) VALUES (?)";
-    
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSectionQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(3, sectionName);
-    
-                int affectedRows = preparedStatement.executeUpdate();
-    
-                if (affectedRows > 0) {
-                    // Retrieve the auto-generated sectionID
-                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            sectionID = generatedKeys.getInt(1);
-                        }
-                    }
+                // Get the auto-generated section ID
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Failed to get the generated section ID.");
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
+            // Handle the exception or log it
+            return -1; // Or some error code to indicate failure
         }
-    
-        return sectionID;
     }
         // Helper methods for closing resources
         private static void closeConnection(Connection connection) {
