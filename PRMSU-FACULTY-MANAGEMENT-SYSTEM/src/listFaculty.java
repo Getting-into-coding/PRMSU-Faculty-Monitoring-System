@@ -330,8 +330,6 @@ public class listFaculty extends JPanel
 		JPanel addPanel = new JPanel();
 		addPanel.setBounds(0, 0, 300, 150);
 		addPanel.setLayout(null);
-
-<<<<<<< HEAD
 	
 		searchBtn.addActionListener(new ActionListener()
 		{
@@ -354,8 +352,6 @@ public class listFaculty extends JPanel
 
 			}
 		});
-=======
->>>>>>> 477a110112691c0f8479f241892af91f257aa568
 	}
 	
 	// Method to load faculty data from the database and populate the UI
