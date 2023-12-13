@@ -87,25 +87,15 @@ public class report extends JPanel{
         // Data
         Object[][] data2 = {
             {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null},
-            {null,null,null,null,null,null}  
         };
         
         //table model
-        model2 = new DefaultTableModel(data2, columnNames2);
+        model2 = new DefaultTableModel(data2, columnNames2){
+        @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         
         class CenterRenderer2 extends DefaultTableCellRenderer {
              public CenterRenderer2() {
@@ -123,6 +113,7 @@ public class report extends JPanel{
         table2.setShowGrid(true);
         table2.setRowHeight(45);
         table2.setFont(new Font("ARIAL", Font.PLAIN, 13));
+        table2.getTableHeader().setReorderingAllowed(false);
         
         //scroll pane
         scrollPane2 = new JScrollPane(table2);
