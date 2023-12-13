@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -35,7 +38,8 @@ import UploadDocTreeNodes.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class report extends JPanel{
+public class report{
+        JPanel panel;
         DefaultTableModel model2;
         JTable table2;
         JScrollPane scrollPane2;
@@ -78,8 +82,12 @@ public class report extends JPanel{
     
      report(){
 
+
+        panel = new JPanel();
+        panel.setLayout(null);
+
         //Color variable
-        Color complimentColor = new Color(0, 122, 122);
+        Color complimentColor = new Color(255, 128, 41);
 		
 
         String[] columnNames2 = {"Name","Department","File","Semester","Academic Year","Status"};
@@ -108,12 +116,12 @@ public class report extends JPanel{
         table2.setBounds(10, 10, 100, 100);
         table2.getTableHeader().setBounds(0,0, 50,30);
         table2.getTableHeader().setFont(new Font("ARIAL",Font.BOLD,16));
-        table2.getTableHeader().setBackground(new Color(57, 167, 255));
         table2.setGridColor(Color.BLACK);
         table2.setShowGrid(true);
         table2.setRowHeight(45);
         table2.setFont(new Font("ARIAL", Font.PLAIN, 13));
         table2.getTableHeader().setReorderingAllowed(false);
+        table2.setDefaultRenderer(Object.class, new TableGradientCell());
         
         //scroll pane
         scrollPane2 = new JScrollPane(table2);
@@ -140,16 +148,58 @@ public class report extends JPanel{
         button2.addActionListener(exportToExcel);
         
         //table panel
-        this.setBounds(180,0,1000,720);
-        //this.setBackground(SystemColor.textHighlight);
-        this.setLayout(null);
-        this.add(scrollPane2);
-        this.add(report);
-        this.add(button2);
+        panel.setBounds(180,0,1000,720);
+        panel.add(scrollPane2);
+        panel.add(report);
+        panel.add(button2);
     }
 
+    class TableGradientCell extends DefaultTableCellRenderer{
+
+        public TableGradientCell(){
+            this(Color.decode("#009FFF"), Color.decode("#ec2F4B"));
+        }
+
+        public TableGradientCell(Color color1, Color color2){
+            this.color1 = color1;
+            this.color2 = color2;
+            setOpaque(false);
+        }
+
+        private Color color1;
+        private Color color2;
+        private int x;
+        private int width;
+        private boolean isSelected;
+
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table2, Object value, boolean isSelected, boolean hasFocus, int row, int column){
+            Component com = super.getTableCellRendererComponent(table2, value, isSelected, hasFocus, row, column);
+            Rectangle cellRec =table2.getCellRect(row, column, true);
+            x=-cellRec.x;
+            width=table2.getWidth()-cellRec.x;
+            return com;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g){
+            Graphics2D g2 =(Graphics2D)g.create();
+            if(isSelected){
+            g2.setPaint(new GradientPaint(x,0,color1,width,0,color2));
+            g2.fill(new Rectangle2D.Double(0,0,getWidth(),getHeight()));
+            }
+            g2.dispose();
+        }
+
+
+    
+
+
+
+
     //This class is to add gradient to the JPanels
-    class JPanelGradient extends report{
+    class JPanelGradient extends JTable{
         protected void paintComponent(Graphics g){
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
@@ -164,4 +214,5 @@ public class report extends JPanel{
             
         }
     }
+}
 }

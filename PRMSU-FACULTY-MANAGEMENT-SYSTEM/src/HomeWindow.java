@@ -86,7 +86,7 @@ public class HomeWindow
             UnivLogo = new JLabel();
             
             faculty.setVisible(false);  // sets List of Faculty Panel not visible
-            reportpage.setVisible(false); // sets Report page not visible
+            reportpage.panel.setVisible(false); // sets Report page not visible
 
         //Root Panel is the master of all sub panels
         RootPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -190,7 +190,7 @@ public class HomeWindow
                         VideoPanel.setEnabled(true);
 
                         faculty.show(false);
-                        reportpage.show(false);
+                        reportpage.panel.show(false);
 
                         ReportPanel.setVisible(false);
                         ReportPanel.setEnabled(false);
@@ -207,7 +207,7 @@ public class HomeWindow
                         VideoPanel.setEnabled(false);
 
                         faculty.show();
-                        reportpage.show(false);
+                        reportpage.panel.show(false);
 
                         ReportPanel.setVisible(false);
                         ReportPanel.setEnabled(false);
@@ -224,7 +224,7 @@ public class HomeWindow
                         VideoPanel.setEnabled(false);
 
                         faculty.show(false);
-                        reportpage.show();
+                        reportpage.panel.show();
                         
                     }
             });
@@ -257,7 +257,7 @@ public class HomeWindow
             RootPanel.add(ReportPanel);
             RootPanel.add(VideoPanel);
             RootPanel.add(faculty);
-            RootPanel.add(reportpage);
+            RootPanel.add(reportpage.panel);
 
             //Window Essentials
             HomeWindow.setTitle("COE Faculty Monitoring System");
