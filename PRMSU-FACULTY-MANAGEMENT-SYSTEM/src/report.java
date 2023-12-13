@@ -79,11 +79,28 @@ public class report{
             }
         }
     };
+    static class ClickedCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                       boolean hasFocus, int row, int column) {
+            Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        // Set the gradient background color for clicked cells
+             cell.setBackground(new Color(0,0,0));
+
+            // Override the default selection color to be transparent
+            if (isSelected) {
+                cell.setBackground(new Color(255, 255, 0, 50)); // Adjust the alpha (last parameter) as needed
+            }
     
+            return cell;
+        }
+    }
+
      report(){
 
 
-        panel = new JPanel();
+        panel = new JPanelGradient();
         panel.setLayout(null);
 
         //Color variable
@@ -104,6 +121,8 @@ public class report{
                 return false;
             }
         };
+
+        
         
         class CenterRenderer2 extends DefaultTableCellRenderer {
              public CenterRenderer2() {
@@ -121,8 +140,7 @@ public class report{
         table2.setRowHeight(45);
         table2.setFont(new Font("ARIAL", Font.PLAIN, 13));
         table2.getTableHeader().setReorderingAllowed(false);
-        table2.setDefaultRenderer(Object.class, new TableGradientCell());
-        
+
         //scroll pane
         scrollPane2 = new JScrollPane(table2);
         table2.setPreferredScrollableViewportSize(new Dimension(975,600));
@@ -154,52 +172,9 @@ public class report{
         panel.add(button2);
     }
 
-    class TableGradientCell extends DefaultTableCellRenderer{
-
-        public TableGradientCell(){
-            this(Color.decode("#009FFF"), Color.decode("#ec2F4B"));
-        }
-
-        public TableGradientCell(Color color1, Color color2){
-            this.color1 = color1;
-            this.color2 = color2;
-            setOpaque(false);
-        }
-
-        private Color color1;
-        private Color color2;
-        private int x;
-        private int width;
-        private boolean isSelected;
-
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table2, Object value, boolean isSelected, boolean hasFocus, int row, int column){
-            Component com = super.getTableCellRendererComponent(table2, value, isSelected, hasFocus, row, column);
-            Rectangle cellRec =table2.getCellRect(row, column, true);
-            x=-cellRec.x;
-            width=table2.getWidth()-cellRec.x;
-            return com;
-        }
-
-        @Override
-        protected void paintComponent(Graphics g){
-            Graphics2D g2 =(Graphics2D)g.create();
-            if(isSelected){
-            g2.setPaint(new GradientPaint(x,0,color1,width,0,color2));
-            g2.fill(new Rectangle2D.Double(0,0,getWidth(),getHeight()));
-            }
-            g2.dispose();
-        }
-
-
-    
-
-
-
 
     //This class is to add gradient to the JPanels
-    class JPanelGradient extends JTable{
+    class JPanelGradient extends JPanel{
         protected void paintComponent(Graphics g){
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
@@ -214,5 +189,4 @@ public class report{
             
         }
     }
-}
 }

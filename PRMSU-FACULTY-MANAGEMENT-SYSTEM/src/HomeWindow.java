@@ -41,7 +41,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 public class HomeWindow 
 {
         JFrame HomeWindow;
-        JPanel RootPanel, NaviPanel, HomePanel, ReportPanel;
+        JPanel RootPanel, NaviPanel, HomePanel, ReportPanel, BGpanel;
         JButton HomeButton, ListFacButton, ReportButton, HelpButton, LogoutButton;
         JLabel UnivLogo, HPimage;
         JPanel VideoPanel;
@@ -106,9 +106,28 @@ public class HomeWindow
 
         //The Home Panel will host the video slideshow Marlou and Ralph proposed
         //The Color BG is a placeholder
-        HomePanel.setBorder(BorderFactory.createLineBorder(TextHighlightColor));
-        HomePanel.setBounds(180,0,900, 720);
-        HomePanel.setLayout(null);
+        BGpanel = new JPanel();
+        
+        HPimage = new JLabel();
+            Image bg;
+            try {
+                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/homewindowbg1.png"));
+                 ImageIcon imageIcon = new ImageIcon(bg);
+                HPimage.setIcon(imageIcon);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        
+            HPimage.setBounds(0, 0, 1000, 720);
+            BGpanel.setBounds(0,0,1000, 720);
+
+            BGpanel.setLayout(null);
+            BGpanel.add(HPimage);
+
+            HomePanel.setBounds(180,0,1000, 720);
+            HomePanel.setLayout(null);
+            HomePanel.add(BGpanel);
 
             VideoPanel.setVisible(true);
 
