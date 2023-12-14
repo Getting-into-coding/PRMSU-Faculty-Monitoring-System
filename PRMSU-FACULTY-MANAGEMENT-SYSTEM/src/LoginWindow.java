@@ -1,16 +1,13 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.*;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -22,12 +19,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import org.jdesktop.swingx.decorator.ComponentAdapter;
+import org.w3c.dom.events.MouseEvent;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
-public class LoginWindow extends javax.swing.JFrame{
+public class LoginWindow extends JFrame
+{
 
+    protected static final String Integer = null;
     JFrame LoginWindow;
     JPanel PTextHolder, PButtonHolder,BgPanel;
     JPanel PTextM,PTextV,PTextQP;
@@ -41,7 +44,10 @@ public class LoginWindow extends javax.swing.JFrame{
     JButton LoginButton, OffButton;
     JTextField Login ;
     
-   LoginWindow(){  
+   /**
+ * 
+ */
+LoginWindow(){  
     LoginWindow = new JFrame("Faculty Monitoring System");
 
     //Back panel and Background design
@@ -137,7 +143,7 @@ public class LoginWindow extends javax.swing.JFrame{
     OffButton = new JButton();
     Image image2;
             try {
-                image2 = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/offbuttonblue.png"));
+                image2 = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/offbuttonblue1.png"));
                  ImageIcon imageIcon = new ImageIcon(image2);
                 OffButton.setIcon(imageIcon);
             } catch (IOException e) {
@@ -337,6 +343,8 @@ public class LoginWindow extends javax.swing.JFrame{
             }
         );
         
+        
+        
     //This section is for adding of components to the Panels
     PTextHolder.add(UnivText);
     PTextHolder.add(CollegeText);
@@ -389,7 +397,7 @@ public class LoginWindow extends javax.swing.JFrame{
     LoginWindow.setUndecorated(true);
     LoginWindow.setSize(1080, 720);
     LoginWindow.setResizable(false);
-    LoginWindow.getContentPane().setLayout(null);    
+    LoginWindow.getContentPane().setLayout(null); 
 
     //This is the function that is responsible for making the window appear centered on startup
     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -399,11 +407,15 @@ public class LoginWindow extends javax.swing.JFrame{
     int y = (dim.height-h)/2;
     LoginWindow.setLocation(x,y);
     LoginWindow.setVisible(true);
-}
+    }   
 
     public static void main(String[] args) {
         FlatMacLightLaf.setup();
-        new LoginWindow();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new LoginWindow();
+            }
+        });
     }
     
     //This class is to add gradient to the JPanels

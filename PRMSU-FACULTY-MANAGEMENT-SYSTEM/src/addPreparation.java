@@ -2,15 +2,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -44,6 +47,7 @@ int currentFacultyID = -1;
 		setLayout(null);
 		
 		frame = new JFrame();
+		frame.setTitle("Add Preparation");
 		frame.setSize(1000, 720);
 		frame.getContentPane().add(this);
 		
@@ -277,6 +281,14 @@ int currentFacultyID = -1;
 		JPanel addPanel = new JPanel();
 		addPanel.setBounds(0, 0, 300, 150);
 		addPanel.setLayout(null);
+
+		Image logo;
+            try {
+                logo = ImageIO.read(addPreparation.class.getResourceAsStream("/Images/addfacultyicon16x.png"));
+                frame.setIconImage(logo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 		
 		//Responsible for making the window open on the center of the screen on start up
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -286,6 +298,9 @@ int currentFacultyID = -1;
 		int y = (dim.height-h)/2;
 		frame.setLocation(x,y);
 		
+	}
+
+	private static void setIconImage(Image logo) {
 	}
 
 	public void fetchAndDisplaySubjects() {

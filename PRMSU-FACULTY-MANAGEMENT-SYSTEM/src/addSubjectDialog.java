@@ -1,12 +1,15 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Calendar;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,6 +42,15 @@ public class addSubjectDialog extends JDialog
         int x = (screenWidth - frameWidth) / 2;
         int y = (screenHeight - frameHeight) / 2;
         setBounds(x, y, frameWidth, frameHeight);
+
+		Image logo;
+            try {
+                logo = ImageIO.read(addSubjectDialog.class.getResourceAsStream("/Images/addsubjecticon16x.png"));
+                this.setIconImage(logo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        
         
 		contentPanel.setBounds(0, 0, 386, 230);
 		setTitle("Add Subject");

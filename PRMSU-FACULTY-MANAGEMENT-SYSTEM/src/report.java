@@ -135,6 +135,7 @@ public class report{
         table2.setBounds(10, 10, 100, 100);
         table2.getTableHeader().setBounds(0,0, 50,30);
         table2.getTableHeader().setFont(new Font("ARIAL",Font.BOLD,16));
+        table2.getTableHeader().setBackground(complimentColor);
         table2.setGridColor(Color.BLACK);
         table2.setShowGrid(true);
         table2.setRowHeight(45);

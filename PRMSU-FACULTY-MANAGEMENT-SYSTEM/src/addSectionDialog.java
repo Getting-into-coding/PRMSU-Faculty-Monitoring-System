@@ -1,9 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -12,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -59,6 +62,15 @@ public class addSectionDialog extends JDialog
         int y = (screenHeight - frameHeight) / 2;
 
         setBounds(x, y, frameWidth, frameHeight);
+
+		Image logo;
+            try {
+                logo = ImageIO.read(addSectionDialog.class.getResourceAsStream("/Images/addsubjecticon16x.png"));
+                this.setIconImage(logo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        
         
 		contentPanel.setBounds(0, 0, 400, 151);
 		setTitle("Add Section");

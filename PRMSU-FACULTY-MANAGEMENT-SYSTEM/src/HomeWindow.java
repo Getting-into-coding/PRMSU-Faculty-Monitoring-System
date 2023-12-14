@@ -106,12 +106,12 @@ public class HomeWindow
 
         //The Home Panel will host the video slideshow Marlou and Ralph proposed
         //The Color BG is a placeholder
-        BGpanel = new JPanel();
+        BGpanel = new JPanelGradient();
         
         HPimage = new JLabel();
             Image bg;
             try {
-                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/homewindowbg1.png"));
+                bg = ImageIO.read(LoginWindow.class.getResourceAsStream("/Images/homewindowbg2.png"));
                  ImageIcon imageIcon = new ImageIcon(bg);
                 HPimage.setIcon(imageIcon);
             } catch (IOException e) {
